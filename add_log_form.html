@@ -1,0 +1,18 @@
+<!-- add_log_form.html placeholder -->
+ <div class="form-section max-w-xl mx-auto">
+  <h2 class="text-xl font-semibold text-blue-600 mb-4">📝 Add Study Log</h2>
+
+  <form id="studyLogForm" onsubmit="submitStudyLog(event)">
+    
+    <label class="label" for="subject">Subject</label>
+    <input type="text" id="subject" name="subject" class="input mb-4" placeholder="e.g., Math, Physics" required />
+
+    <label class="label" for="duration">Duration (minutes)</label>
+    <input type="number" id="duration" name="duration" class="input mb-4" min="1" placeholder="e.g., 60" required />
+
+    <label class="label" for="study_date">Study Date</label>
+    <input type="date" id="study_date" name="study_date" class="input mb-6" required />
+
+    <button type="submit" class="btn-primary w-full">➕ Add Log</button>
+  </form>
+</div>

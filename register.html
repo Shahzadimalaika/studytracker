@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Study Habit Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold text-blue-700 mb-4 text-center">📝 Register for Study Tracker</h2>
+
+    <div id="messageBox" class="hidden text-sm mb-3"></div>
+
+    <form id="registerForm" class="space-y-4" novalidate>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+        <input type="text" id="username" required placeholder="Your name" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" id="email" required placeholder="example@email.com" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input type="password" id="password" required minlength="6" placeholder="Minimum 6 characters" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Register</button>
+    </form>
+
+    <p class="text-sm text-center mt-4">
+      Already have an account?
+      <a href="login.html" class="text-blue-600 hover:underline">Login here</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const msg = document.getElementById('messageBox');
+
+      // Basic frontend validation
+      if (!username || !email || !password) {
+        msg.textContent = "All fields are required.";
+        msg.className = "text-red-600 text-sm mb-3";
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      fetch('api/auth/register.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+      })
+        .then(res => res.json())
+        .then(data => {
+          msg.textContent = data.message;
+          msg.classList.remove('hidden');
+          msg.className = data.success
+            ? 'text-green-600 text-sm mb-3'
+            : 'text-red-600 text-sm mb-3';
+
+          if (data.success) {
+            setTimeout(() => window.location.href = 'login.html', 1500);
+          }
+        })
+        .catch(() => {
+          msg.textContent = "Something went wrong. Please try again.";
+          msg.className = "text-red-600 text-sm mb-3";
+          msg.classList.remove('hidden');
+        });
+    });
+    
+  </script>
+
+</body>
+</html>
