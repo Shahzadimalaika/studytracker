@@ -23,8 +23,7 @@ requirements
 - PHP (>= 7.4)
 - MySQL
 - Apache or XAMPP/WAMP
-- Clone the repository:
-   git clone https://github.com/your-username/studytracker.git
+
 
 2. Import the `database.sql` file into your MySQL server.
 
